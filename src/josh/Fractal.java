@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  * Created by Joshua on 3/2/2016.
- * Project: Fractle
+ * Project: Fractal
  */
 public class Fractal {
 

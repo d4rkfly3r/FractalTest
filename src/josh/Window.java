@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * Created by Joshua on 3/2/2016.
- * Project: Fractle
+ * Project: Fractal
  */
 public class Window extends Frame implements MouseListener, MouseMotionListener, KeyListener, WindowListener {
 

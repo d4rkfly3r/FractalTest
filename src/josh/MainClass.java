@@ -8,7 +8,7 @@ import java.io.Writer;
 
 /**
  * Created by Joshua on 3/2/2016.
- * Project: Fractle
+ * Project: Fractal
  */
 public class MainClass {
     static Window window;
