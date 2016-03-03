@@ -11,9 +11,11 @@ import java.util.Random;
  * Created by Joshua on 3/2/2016.
  * Project: Fractle
  */
-public class MainWindow extends Frame implements WindowListener, MouseListener, ComponentListener,MouseMotionListener {
+public class MainWindow extends Frame implements WindowListener, MouseListener, ComponentListener, MouseMotionListener {
 
-    private int w = 1001, h = 1001;
+    private final boolean debug = true;
+    private int w = 1000, h = 1000;
+    private int recW = 10, recH = 10;
     private BufferedImage bi;
     private int myStartX;
     private int myStartY;
@@ -32,6 +34,9 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
     public static final int MAX_ITERATIONS = 500;
     public static final int CHAR_DISPLAY_HEIGHT = 15;
     public static final int CHAR_DISPLAY_WIDTH = 300;
+
+    int chnkCnt = (w * h) / (recW * recH);
+    int cCC = 0;
 
 
     public MainWindow() {
@@ -66,66 +71,84 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
         real = 0.0;
         imaginary = 0.0;
 
-//        if (t1 != null) t1.stop();
-//        if (t2 != null) t2.stop();
-//        if (t3 != null) t3.stop();
-//        if (t4 != null) t4.stop();
-//
-//        t1 = new Thread(group, () -> {
-//            int rowCnt = 0;
-//            int colCnt = 0;
-//            int minColCnt = 0;
-//            int maxRowCnt = 50;
-//            int maxColCnt = 50;
-//
-//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-//        });
-//        t2 = new Thread(group, () -> {
-//            int rowCnt = 50;
-//            int colCnt = 0;
-//            int minColCnt = 0;
-//            int maxRowCnt = 100;
-//            int maxColCnt = 50;
-//
-//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-//        });
-//        t3 = new Thread(group, () -> {
-//            int rowCnt = 50;
-//            int colCnt = 50;
-//            int minColCnt = 50;
-//            int maxRowCnt = 100;
-//            int maxColCnt = 100;
-//
-//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-//        });
-//        t4 = new Thread(group, () -> {
-//            int rowCnt = 0;
-//            int colCnt = 50;
-//            int minColCnt = 50;
-//            int maxRowCnt = 50;
-//            int maxColCnt = 100;
-//
-//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-//        });
-//        t1.setPriority(Thread.MIN_PRIORITY);
-//        t2.setPriority(Thread.MIN_PRIORITY);
-//        t3.setPriority(Thread.MIN_PRIORITY);
-//        t4.setPriority(Thread.MIN_PRIORITY);
-//        t1.start();
-//        t2.start();
-//        t3.start();
-//        t4.start();
+        System.err.println(chnkCnt + " | " + cCC);
 
         t1 = new Thread(group, () -> {
-            int rowCnt = 0;
-            int colCnt = 0;
-            int minColCnt = 0;
-            int maxRowCnt = 100;
-            int maxColCnt = 100;
+//            Color dC = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+            Color dC = Color.red;
+            do {
+                int tLCCC = cCC;
+                cCC++;
 
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                int sX = (recW * tLCCC) % w;
+                int sY = ((int) Math.floor((recW * tLCCC) / w)) * 10;
+                for (int x = sX; x < sX + recW; x++) {
+                    for (int y = sY; y < sY + recH; y++) {
+                        if (debug) System.err.println(x + " | " + y);
+                        bi.setRGB(x, y, dC.getRGB());
+                    }
+                }
+                repaint();
+            } while (cCC < chnkCnt);
+        });
+        t2 = new Thread(group, () -> {
+//            Color dC = new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
+            Color dC = Color.green;
+            do {
+                int tLCCC = cCC;
+                cCC++;
+
+                int sX = (recW * tLCCC) % w;
+                int sY = ((int) Math.floor((recW * tLCCC) / w)) * 10;
+                for (int x = sX; x < sX + recW; x++) {
+                    for (int y = sY; y < sY + recH; y++) {
+                        if (debug) System.err.println(x + " | " + y);
+                        bi.setRGB(x, y, dC.getRGB());
+                    }
+                }
+                repaint();
+            } while (cCC < chnkCnt);
+        });
+        t3 = new Thread(group, () -> {
+//            Color dC = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+            Color dC = Color.blue;
+            do {
+                int tLCCC = cCC;
+                cCC++;
+
+                int sX = (recW * tLCCC) % w;
+                int sY = ((int) Math.floor((recW * tLCCC) / w)) * 10;
+                for (int x = sX; x < sX + recW; x++) {
+                    for (int y = sY; y < sY + recH; y++) {
+                        if (debug) System.err.println(x + " | " + y);
+                        bi.setRGB(x, y, dC.getRGB());
+                    }
+                }
+                repaint();
+            } while (cCC < chnkCnt);
+        });
+        t4 = new Thread(group, () -> {
+//            Color dC = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+            Color dC = Color.black;
+            do {
+                int tLCCC = cCC;
+                cCC++;
+
+                int sX = (recW * tLCCC) % w;
+                int sY = ((int) Math.floor((recW * tLCCC) / w)) * 10;
+                for (int x = sX; x < sX + recW; x++) {
+                    for (int y = sY; y < sY + recH; y++) {
+                        if (debug) System.err.println(x + " | " + y);
+                        bi.setRGB(x, y, dC.getRGB());
+                    }
+                }
+                repaint();
+            } while (cCC < chnkCnt);
         });
         t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
 
 
     }
