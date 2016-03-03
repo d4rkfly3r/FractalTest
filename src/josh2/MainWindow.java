@@ -1,5 +1,7 @@
 package josh2;
 
+import josh.Complex;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -75,78 +77,83 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
     }
 
     int pi = 10;
+    ThreadGroup group = new ThreadGroup("Rendering Threads");
     Thread t1, t2, t3, t4;
-
-    int rowCnt = 0, colCnt = 0, maxColCnt = getWidth() / pi, maxRowCnt = getHeight() / pi;
-//new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255))
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
-//        if (t1 != null) t1.stop();
-//        if (t2 != null) t2.stop();
-//        if (t3 != null) t3.stop();
-//        if (t4 != null) t4.stop();
+        if (t1 != null) t1.stop();
+        if (t2 != null) t2.stop();
+        if (t3 != null) t3.stop();
+        if (t4 != null) t4.stop();
+        Random random = new Random();
 
-        t1 = new Thread(() -> {
-            rowCnt = 0;
-            colCnt = 0;
-            maxColCnt = 50;
-            maxRowCnt = 50;
+        t1 = new Thread(group, () -> {
+            int rowCnt = 0;
+            int colCnt = 0;
+            int minColCnt = 0;
+            int maxRowCnt = 50;
+            int maxColCnt = 50;
 
-            draw(rowCnt, colCnt, maxColCnt, maxRowCnt);
+            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
-        t2 = new Thread(() -> {
-            rowCnt = 50;
-            colCnt = 0;
-            maxColCnt = 100;
-            maxRowCnt = 50;
+        t2 = new Thread(group, () -> {
+            int rowCnt = 50;
+            int colCnt = 0;
+            int minColCnt = 0;
+            int maxRowCnt = 100;
+            int maxColCnt = 50;
 
-            draw(rowCnt, colCnt, maxColCnt, maxRowCnt);
+            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
-        t3 = new Thread(() -> {
-            rowCnt = 50;
-            colCnt = 50;
-            maxColCnt = 100;
-            maxRowCnt = 100;
+        t3 = new Thread(group, () -> {
+            int rowCnt = 50;
+            int colCnt = 50;
+            int minColCnt = 50;
+            int maxRowCnt = 100;
+            int maxColCnt = 100;
 
-            draw(rowCnt, colCnt, maxColCnt, maxRowCnt);
+            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
-        t4 = new Thread(() -> {
-            rowCnt = 0;
-            colCnt = 50;
-            maxColCnt = 50;
-            maxRowCnt = 100;
+        t4 = new Thread(group, () -> {
+            int rowCnt = 0;
+            int colCnt = 50;
+            int minColCnt = 50;
+            int maxRowCnt = 50;
+            int maxColCnt = 100;
 
-            draw(rowCnt, colCnt, maxColCnt, maxRowCnt);
+            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
+        t1.setPriority(Thread.MIN_PRIORITY);
+        t2.setPriority(Thread.MIN_PRIORITY);
+        t3.setPriority(Thread.MIN_PRIORITY);
+        t4.setPriority(Thread.MIN_PRIORITY);
         t1.start();
         t2.start();
         t3.start();
         t4.start();
-
     }
 
-    private void draw(int rowCnt, int colCnt, int maxColCnt, int maxRowCnt) {
+    private void draw(int rowCnt, int colCnt, int minColCnt, int maxColCnt, int maxRowCnt, Color color) {//
         do {
             int startX = colCnt * pi;
             int endX = startX + pi;
             int startY = rowCnt * pi;
             int endY = startY + pi;
             colCnt++;
+            if (colCnt >= maxColCnt) {
+                colCnt = minColCnt;
+                rowCnt++;
+            }
 
             Color drawColor;
-            Random random = new Random();
             for (int x = startX; x < endX; x++) {
                 for (int y = startY; y < endY; y++) {
-                    drawColor = Color.red;
+                    drawColor = color;
                     bi.setRGB(x, y, drawColor.getRGB());
                     repaint(x, y, 1, 1);
                 }
-            }
-            if (colCnt >= maxColCnt) {
-                colCnt = 0;
-                rowCnt++;
             }
         } while (rowCnt < maxRowCnt);
 
