@@ -29,7 +29,7 @@ public class Window extends Frame implements MouseListener, MouseMotionListener,
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void update(Graphics g) {
         g.setColor(Color.yellow);
         g.drawRect(0,0,getWidth(),getHeight());
         g.drawImage(data, 0, 0, null);
