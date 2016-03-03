@@ -11,7 +11,7 @@ import java.util.Random;
  * Created by Joshua on 3/2/2016.
  * Project: Fractle
  */
-public class MainWindow extends Frame implements WindowListener, MouseListener, ComponentListener {
+public class MainWindow extends Frame implements WindowListener, MouseListener, ComponentListener,MouseMotionListener {
 
     private int w = 1001, h = 1001;
     private BufferedImage bi;
@@ -30,6 +30,8 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
 
     public static final int MAX_MAGNITUDE = 10;
     public static final int MAX_ITERATIONS = 500;
+    public static final int CHAR_DISPLAY_HEIGHT = 15;
+    public static final int CHAR_DISPLAY_WIDTH = 300;
 
 
     public MainWindow() {
@@ -64,55 +66,66 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
         real = 0.0;
         imaginary = 0.0;
 
-        if (t1 != null) t1.stop();
-        if (t2 != null) t2.stop();
-        if (t3 != null) t3.stop();
-        if (t4 != null) t4.stop();
+//        if (t1 != null) t1.stop();
+//        if (t2 != null) t2.stop();
+//        if (t3 != null) t3.stop();
+//        if (t4 != null) t4.stop();
+//
+//        t1 = new Thread(group, () -> {
+//            int rowCnt = 0;
+//            int colCnt = 0;
+//            int minColCnt = 0;
+//            int maxRowCnt = 50;
+//            int maxColCnt = 50;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t2 = new Thread(group, () -> {
+//            int rowCnt = 50;
+//            int colCnt = 0;
+//            int minColCnt = 0;
+//            int maxRowCnt = 100;
+//            int maxColCnt = 50;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t3 = new Thread(group, () -> {
+//            int rowCnt = 50;
+//            int colCnt = 50;
+//            int minColCnt = 50;
+//            int maxRowCnt = 100;
+//            int maxColCnt = 100;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t4 = new Thread(group, () -> {
+//            int rowCnt = 0;
+//            int colCnt = 50;
+//            int minColCnt = 50;
+//            int maxRowCnt = 50;
+//            int maxColCnt = 100;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t1.setPriority(Thread.MIN_PRIORITY);
+//        t2.setPriority(Thread.MIN_PRIORITY);
+//        t3.setPriority(Thread.MIN_PRIORITY);
+//        t4.setPriority(Thread.MIN_PRIORITY);
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//        t4.start();
 
         t1 = new Thread(group, () -> {
             int rowCnt = 0;
             int colCnt = 0;
             int minColCnt = 0;
-            int maxRowCnt = 50;
-            int maxColCnt = 50;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t2 = new Thread(group, () -> {
-            int rowCnt = 50;
-            int colCnt = 0;
-            int minColCnt = 0;
-            int maxRowCnt = 100;
-            int maxColCnt = 50;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t3 = new Thread(group, () -> {
-            int rowCnt = 50;
-            int colCnt = 50;
-            int minColCnt = 50;
             int maxRowCnt = 100;
             int maxColCnt = 100;
 
             draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
-        t4 = new Thread(group, () -> {
-            int rowCnt = 0;
-            int colCnt = 50;
-            int minColCnt = 50;
-            int maxRowCnt = 50;
-            int maxColCnt = 100;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t1.setPriority(Thread.MIN_PRIORITY);
-        t2.setPriority(Thread.MIN_PRIORITY);
-        t3.setPriority(Thread.MIN_PRIORITY);
-        t4.setPriority(Thread.MIN_PRIORITY);
         t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
 
 
     }
@@ -303,57 +316,68 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
             imaginaryEnd = imaginary1;
         }
 
-
-        if (t1 != null) t1.stop();
-        if (t2 != null) t2.stop();
-        if (t3 != null) t3.stop();
-        if (t4 != null) t4.stop();
         Random random = new Random();
 
+//        if (t1 != null) t1.stop();
+//        if (t2 != null) t2.stop();
+//        if (t3 != null) t3.stop();
+//        if (t4 != null) t4.stop();
+
+//        t1 = new Thread(group, () -> {
+//            int rowCnt = 0;
+//            int colCnt = 0;
+//            int minColCnt = 0;
+//            int maxRowCnt = 50;
+//            int maxColCnt = 50;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t2 = new Thread(group, () -> {
+//            int rowCnt = 50;
+//            int colCnt = 0;
+//            int minColCnt = 0;
+//            int maxRowCnt = 100;
+//            int maxColCnt = 50;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t3 = new Thread(group, () -> {
+//            int rowCnt = 50;
+//            int colCnt = 50;
+//            int minColCnt = 50;
+//            int maxRowCnt = 100;
+//            int maxColCnt = 100;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t4 = new Thread(group, () -> {
+//            int rowCnt = 0;
+//            int colCnt = 50;
+//            int minColCnt = 50;
+//            int maxRowCnt = 50;
+//            int maxColCnt = 100;
+//
+//            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+//        });
+//        t1.setPriority(Thread.MIN_PRIORITY);
+//        t2.setPriority(Thread.MIN_PRIORITY);
+//        t3.setPriority(Thread.MIN_PRIORITY);
+//        t4.setPriority(Thread.MIN_PRIORITY);
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//        t4.start();
         t1 = new Thread(group, () -> {
             int rowCnt = 0;
             int colCnt = 0;
             int minColCnt = 0;
-            int maxRowCnt = 50;
-            int maxColCnt = 50;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t2 = new Thread(group, () -> {
-            int rowCnt = 50;
-            int colCnt = 0;
-            int minColCnt = 0;
-            int maxRowCnt = 100;
-            int maxColCnt = 50;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t3 = new Thread(group, () -> {
-            int rowCnt = 50;
-            int colCnt = 50;
-            int minColCnt = 50;
             int maxRowCnt = 100;
             int maxColCnt = 100;
 
             draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
         });
-        t4 = new Thread(group, () -> {
-            int rowCnt = 0;
-            int colCnt = 50;
-            int minColCnt = 50;
-            int maxRowCnt = 50;
-            int maxColCnt = 100;
-
-            draw(rowCnt, colCnt, minColCnt, maxColCnt, maxRowCnt, new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-        });
-        t1.setPriority(Thread.MIN_PRIORITY);
-        t2.setPriority(Thread.MIN_PRIORITY);
-        t3.setPriority(Thread.MIN_PRIORITY);
-        t4.setPriority(Thread.MIN_PRIORITY);
         t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
+
     }
 
     @Override
@@ -384,6 +408,30 @@ public class MainWindow extends Frame implements WindowListener, MouseListener, 
 
     @Override
     public void componentHidden(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        Graphics gr = getGraphics();
+        int x = e.getX();
+        int y = e.getY();
+        gr.setColor(Color.black);
+        gr.fillRect(0, 0, CHAR_DISPLAY_WIDTH, CHAR_DISPLAY_HEIGHT);
+        gr.setColor(Color.white);
+        gr.drawString("(" + x + "," + y + ")", 0, CHAR_DISPLAY_HEIGHT - 2);
+        imaginary = imaginaryEnd - ((imaginaryEnd - imaginaryStart) / getHeight()) * y;
+        real = ((realEnd - realStart) / getWidth()) * x + realStart;
+        gr.setColor(Color.black);
+        gr.fillRect(getWidth() - CHAR_DISPLAY_WIDTH, 0, CHAR_DISPLAY_WIDTH, 30);
+        gr.setColor(Color.white);
+        gr.drawString("(" + real + "+" + imaginary + "i)", getWidth() - CHAR_DISPLAY_WIDTH, CHAR_DISPLAY_HEIGHT - 2);
+        gr.drawLine(myStartX, myStartY, x, myStartY);
+        gr.drawLine(myStartX, myStartY, myStartX, y);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
 
     }
 }
